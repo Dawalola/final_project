@@ -1,0 +1,27 @@
+---
+title: My output
+author: You
+output: html_document
+---
+
+```{r, here-i-am, include = FALSE}
+here::i_am(
+  "report.Rmd"
+)
+```
+
+```{r, load-random-numbers, include = FALSE}
+
+# Read device frequency from output directory
+device_frequency <- readRDS(
+  here::here("output/device_frequency.rds")
+)
+
+# TO DO: 
+# Read watched video from output directory
+watched_video <- readRDS(
+  here::here("output/watched_video.rds")
+)
+
+
+```

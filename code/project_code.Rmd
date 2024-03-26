@@ -1,0 +1,82 @@
+---
+title: "FINAL PROJECT"
+author: "Dawa Oluya"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+---
+
+The dataset pertains to the learning attitudes and perceptions of 69 second-year dental students in Korea. These students participated in a clinical periodontology course delivered via YouTube in a flipped classroom setting. The course, held from September 2 to December 16, 2016, comprised 1-hour weekly sessions over a total of 14 hours. After completing the course and final examination, students responded to a survey via Google Forms on their smartphones in January 2017.The analysis aims to provide insights into the effectiveness and acceptability of online learning methods in dental education.
+```{r, bring data}
+# Set the working directory to the directory containing the R Markdown file
+here::i_am("code/project_code.Rmd")
+absolute_path_to_data <- here::here("raw_data", "raw.xlsx")
+# Read the Excel file into R as a data frame
+data <- readxl::read_excel(absolute_path_to_data)
+```
+
+Cleaning dataset variable names to make it easier to use and understand
+```{r, cleaning of variable name}
+#cleaning names using janitor package
+data <- janitor :: clean_names(data)
+
+# Rename variables to more concise names
+new_names <- c(
+  "timestamp",  "gender",  "skill_proficiency", "device_used","location","watch_time",
+  "companions",  "watch_before_class",  "playback_speed", "skip_button_used",
+  "pause_button_used","rewatch_video","video_ease_comparison", "future_video_watch",
+  "subscribe_to_channel",  "share_video","watch_recommended_videos", "youtube_advantages"
+)
+
+# Assign the new names to the dataset
+names(data) <- new_names
+```
+
+
+```{r, making_table}
+library(knitr)
+library(gtsummary)
+
+# Create summary table
+watched_video <- data %>%
+  select("gender", "location", "watch_before_class") %>%
+  tbl_summary(by = watch_before_class) %>%
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Watch The Video Before Class**") %>%
+  add_overall() %>%
+  add_p() 
+
+watched_video
+
+# Save summary table as RDS file
+saveRDS(
+  watched_video,
+  file = here::here("output/watched_video.rds")
+)
+```
+The table provides a summary on variables gender, where they watched the videos and whether the video was watched before class. It displays descriptive statistics and p-values, organized by the "Watch Before Class" variable.
+```{r,making_figures}
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+
+# Count the frequency of each device used by gender
+device_frequency <- data %>%
+  count(gender, device_used)
+
+# Create a bar plot using ggplot2
+barplot <- ggplot(device_frequency, aes(x = device_used, y = n, fill = gender)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 1)) +
+  labs(x = "Device Used", y = "Frequency", fill = "Gender") +
+  theme_minimal()
+ print(barplot)
+
+
+# Save the plot as a PNG file
+ggsave(
+ here::here("output/device_frequency.png"),
+  plot = barplot,
+  device = "png"
+)
+
+```
+The chart displays the frequency of devices used by gender. The x-axis shows the devices, while the y-axis represents the frequency. Each device has two bars side by side, one for each gender, with colors indicating gender. This allows for easy comparison of device usage patterns across genders.
