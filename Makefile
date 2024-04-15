@@ -7,4 +7,5 @@ clean:
 	rm -f output/*.rds && rm -f report.html
 	
 install:
-	R -e "renv::restore()"	
+    R -e "renv::restore()"
+	

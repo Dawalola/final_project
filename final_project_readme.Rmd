@@ -43,7 +43,10 @@ The report includes: - Descriptive statistics of variables such as gender, locat
 - A bar plot illustrating the frequency of devices used by gender, facilitating comparison of device usage patterns.
 
 The code for creating the required table is located in the section titled "Creating Summary Table," and the code for generating the figure is located in the section titled "Creating Bar Plot."
-
+## Synchronizing Your Package Repository
+To synchronize your package repository:
+1. Navigate to the directory containing your project.
+2. Run the following command in your terminal or command prompt: 'make install.
 ## Additional Notes
 
 -   The code provided assumes that necessary R packages (`dplyr`, `ggplot2`, `janitor`, `gtsummary`) are installed.
