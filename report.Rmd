@@ -1,27 +1,17 @@
 ---
-title: My output
+title: "DATA 550 Final term Report"
 author: You
 output: html_document
 ---
 
-```{r, here-i-am, include = FALSE}
-here::i_am(
-  "report.Rmd"
+
+```{r, set-chunk-opts, include = FALSE}
+library(knitr)
+opts_chunk$set(
+  echo = FALSE, warning = FALSE, message = FALSE
 )
 ```
 
-```{r, load-random-numbers, include = FALSE}
-
-# Read device frequency from output directory
-device_frequency <- readRDS(
-  here::here("output/device_frequency.rds")
-)
-
-# TO DO: 
-# Read watched video from output directory
-watched_video <- readRDS(
-  here::here("output/watched_video.rds")
-)
-
-
+```{r, child-reports}
+#| child = ("code/project_code.Rmd")
 ```
