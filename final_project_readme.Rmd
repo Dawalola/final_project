@@ -6,23 +6,22 @@ editor_options:
 
 # FINAL PROJECT
 
-**Author:** Dawa Oluya 
-**Date:** 2024-02-19
+**Author:** Dawa Oluya **Date:** 2024-02-19
 
 ## Overview
 
 This repository contains data and code for analyzing the learning attitudes and perceptions of second-year dental students in Korea participating in a clinical periodontology course delivered via YouTube in a flipped classroom setting.
 The analysis aims to provide insights into the effectiveness and acceptability of online learning methods in dental education.
 
-
 ## Repository Contents
 
 -   **Data**: The raw data is stored in an Excel file named `raw.xlsx` in the `raw_data` directory.
+
 -   **Code**: The R code for data cleaning, analysis, and visualization is provided in the `code/project_code.Rmd` file.
+
 -   **Output**: The output directory contains the generated summary table (`watched_video.rds`) and figure (`device_frequency.png`).
 
-- **makefile** :for how to make report
-
+-   **makefile** :for how to make report
 
 ## How to Generate the Final Report
 
@@ -32,9 +31,12 @@ Set the working directory to the directory containing the R Markdown file: `here
 Read the Excel file into R as a data frame and clean the dataset variable names.
 3.
 Create a summary table of descriptive statistics using the `gtsummary` package.
-4. Save the summary table as an RDS file.
-5. Count the frequency of each device used by gender and create a bar plot using `ggplot2`.
-6. Save the plot as a PNG file.
+4.
+Save the summary table as an RDS file.
+5.
+Count the frequency of each device used by gender and create a bar plot using `ggplot2`.
+6.
+Save the plot as a PNG file.
 
 ## Contents of the Report
 
@@ -42,13 +44,66 @@ The report includes: - Descriptive statistics of variables such as gender, locat
 - A summary table displaying descriptive statistics and p-values organized by the "Watch Before Class" variable.
 - A bar plot illustrating the frequency of devices used by gender, facilitating comparison of device usage patterns.
 
-The code for creating the required table is located in the section titled "Creating Summary Table," and the code for generating the figure is located in the section titled "Creating Bar Plot."
-## Synchronizing Your Package Repository
-To synchronize your package repository:
-1. Navigate to the directory containing your project.
-2. Run the following command in your terminal or command prompt: 'make install.
+The code for creating the required table is located in the section titled "Creating Summary Table," and the code for generating the figure is located in the section titled "Creating Bar Plot." \## Synchronizing Your Package Repository To synchronize your package repository: 1.
+Navigate to the directory containing your project.
+2.
+Run the following command in your terminal or command prompt: 'make install.
 ## Additional Notes
 
 -   Ensure that the working directory is properly set before running the code.
 -   Adjust file paths as needed based on the directory structure.
 -   For any questions or issues, feel free to contact the author.
+
+
+# Makefile for Docker
+
+## Usage
+1. Clone the repository.
+2. Run `make project_image` to build the Docker image.
+3. Run `make final_report/report.html` to generate the report.
+
+## Makefile Rules
+- `project_image`: Builds the Docker image.
+- `final_report/report.html`: Generates the report.
+
+## Note
+Find the generated report in the `final_report` directory.
+
+
+# Dockerfile for R Project
+
+## Description
+
+This Dockerfile is designed to set up an environment for running an R project.
+It includes all necessary dependencies and required R packages specified in
+`renv.lock`.
+
+## Usage
+
+1.  Clone the repository.
+
+2.  Navigate to the repository directory.
+
+3.  Build the Docker image using the following command:
+    `docker build -t project_image .`
+    
+4.  Run the Docker container with the following command:
+
+    `docker run -v "/$(pwd)/final_report":/project/final_report project_image`
+    
+5.  Once the process is complete, you can find the generated report in the
+`final_report` directory.
+
+## Dockerfile Steps
+
+1.  Update and install pandoc.
+2.  Create necessary directories.
+3.  Copy project files and set up renv environment.
+4.  Restore renv library.
+5.  Generate the report.
+
+## Note
+
+The `final_report` directory will contain the generated report file named
+`report.html`.
+

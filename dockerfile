@@ -1,32 +1,38 @@
 # Use rocker/rstudio as base
 FROM rocker/r-ubuntu
 
-
 RUN apt-get update && apt-get install -y pandoc
 
-run mkdir /project
-workdir /project
+# Set up project directory structure
+RUN mkdir /project
+WORKDIR /project
+RUN mkdir code
+RUN mkdir raw_data
+RUN mkdir output
 
-run mkdir code
-run mkdir raw_data
-run mkdir output
-copy code code
-copy raw_data raw_data
-copy Makefile .
-copy .Rprofile .
-copy renv.lock . 
+# Copy project files
+COPY code code
+COPY raw_data raw_data
+COPY Makefile .
+COPY .Rprofile .
+COPY renv.lock . 
 COPY report.Rmd .
-copy render_report.R .
+COPY render_report.R .
 COPY final_project_readme.Rmd .
 
-run mkdir renv
-copy renv/activate.R renv
-copy renv/settings.json renv
+# Set up renv
+RUN mkdir renv
+COPY renv/activate.R renv
+COPY renv/settings.json renv
 
+# Restore R environment
+RUN Rscript -e "renv::restore(prompt = FALSE)"
 
+# Create directory for final report
+RUN mkdir final_report
 
-run Rscript -e "renv::restore(prompt = FALSE)"
-run mkdir final_report
-run apt-get update && apt-get install -y pandoc
+# Install pandoc
+RUN apt-get update && apt-get install -y pandoc
 
-cmd make && mv report.html final_report
+# Generate the final report
+CMD make && mv report.html final_report
