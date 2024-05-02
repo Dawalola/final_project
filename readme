@@ -19,18 +19,13 @@ The analysis aims to provide insights into the effectiveness and acceptability o
 
 ## How to Generate the Final Report
 
-To generate the final report: 1.
-Set the working directory to the directory containing the R Markdown file: `here::i_am("code/project_code.Rmd")`.
-2.
-Read the Excel file into R as a data frame and clean the dataset variable names.
-3.
-Create a summary table of descriptive statistics using the `gtsummary` package.
-4.
-Save the summary table as an RDS file.
-5.
-Count the frequency of each device used by gender and create a bar plot using `ggplot2`.
-6.
-Save the plot as a PNG file.
+To generate the final report: 
+1.Set the working directory to the directory containing the R Markdown file: `here::i_am("code/project_code.Rmd")`
+2.Read the Excel file into R as a data frame and clean the dataset variable names.
+3.Create a summary table of descriptive statistics using the `gtsummary` package.
+4.Save the summary table as an RDS file.
+5.Count the frequency of each device used by gender and create a bar plot using `ggplot2`.
+6.Save the plot as a PNG file.
 
 ## Contents of the Report
 
@@ -40,8 +35,7 @@ The report includes: - Descriptive statistics of variables such as gender, locat
 
 The code for creating the required table is located in the section titled "Creating Summary Table," and the code for generating the figure is located in the section titled "Creating Bar Plot." \## Synchronizing Your Package Repository To synchronize your package repository: 1.
 Navigate to the directory containing your project.
-2.
-Run the following command in your terminal or command prompt: 'make install.
+2.Run the following command in your terminal or command prompt: 'make install.
 ## Additional Notes
 
 -   Ensure that the working directory is properly set before running the code.
@@ -83,7 +77,8 @@ It includes all necessary dependencies and required R packages specified in
     
 4.  Run the Docker container with the following command:
 
-    `docker run -v "/$(pwd)/final_report":/project/final_report project_image`
+    `docker run -v "/$$(pwd)/final_report":/project/final_report dawalola/project_image:latest
+`
     
 5.  Once the process is complete, you can find the generated report in the
 `final_report` directory.
